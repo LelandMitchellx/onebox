@@ -2,7 +2,7 @@
 # ==============================================================================
 # Sing-box 三合一全能服务端一键安装脚本 (Debian / Ubuntu)
 # 协议支持: VLESS + Reality (TCP) | Hysteria 2 (UDP) | AnyTLS (TCP)
-# 端口策略: 统一默认使用随机高位端口 (10000-60000)，有效防探测与防扫端口
+# 端口策略: 默认分配互不冲突的随机端口，支持环境变量自定义
 # 官方最新核心: https://github.com/SagerNet/sing-box/releases
 # ==============================================================================
 
@@ -130,7 +130,7 @@ chmod 600 /etc/sing-box/certs/key.pem
 HY2_PASSWORD="${HY2_PASS:-$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9')}"
 ANYTLS_PASSWORD="${ANYTLS_PASS:-$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9')}"
 
-# 7. 端口分配与冲突避免 (统一采用随机高位端口 10000 - 60000)
+# 7. 端口分配与冲突避免
 # 端口检测与随机生成函数
 get_random_high_port() {
     local proto=${1:-tcp}
@@ -151,7 +151,7 @@ get_random_high_port() {
     done
 }
 
-# (1) VLESS + Reality 端口 (默认随机高位端口，支持环境变量 PORT 显式指定)
+# (1) VLESS + Reality 端口 (默认随机分配，支持环境变量 PORT 自定义)
 if [ -n "${PORT}" ]; then
     VLESS_PORT="${PORT}"
 else
@@ -159,7 +159,7 @@ else
 fi
 REALITY_DEST_SNI="${REALITY_SNI:-addons.mozilla.org}"
 
-# (2) Hysteria 2 端口 (默认随机高位端口，支持环境变量 HY2_PORT 显式指定)
+# (2) Hysteria 2 端口 (默认随机分配，支持环境变量 HY2_PORT 自定义)
 if [ -n "${HY2_PORT}" ]; then
     HY2_PORT="${HY2_PORT}"
 else
@@ -169,7 +169,7 @@ else
     done
 fi
 
-# (3) AnyTLS 端口 (默认随机高位端口，支持环境变量 ANYTLS_PORT 显式指定)
+# (3) AnyTLS 端口 (默认随机分配，支持环境变量 ANYTLS_PORT 自定义)
 if [ -n "${ANYTLS_PORT}" ]; then
     ANYTLS_PORT="${ANYTLS_PORT}"
 else
@@ -179,7 +179,7 @@ else
     done
 fi
 
-log_info "端口分配完毕 (统一使用高位随机端口):"
+log_info "端口分配完成:"
 log_info "  - VLESS + Reality (TCP) : ${CYAN}${VLESS_PORT}${PLAIN}"
 log_info "  - Hysteria 2      (UDP) : ${CYAN}${HY2_PORT}${PLAIN}"
 log_info "  - AnyTLS          (TCP) : ${CYAN}${ANYTLS_PORT}${PLAIN}"
@@ -334,7 +334,7 @@ cat <<INFO > /etc/sing-box/client-info.txt
 协议类型 (Protocol)   : VLESS
 流控模式 (Flow)       : xtls-rprx-vision (XTLS Vision)
 传输协议 (Network)    : TCP
-端口 (Port)           : ${VLESS_PORT} (随机高位防探测)
+端口 (Port)           : ${VLESS_PORT}
 UUID                  : ${REALITY_UUID}
 Reality 公钥 (pbk)    : ${REALITY_PUB}
 Short ID              : ${REALITY_SHORT_ID}
@@ -347,7 +347,7 @@ ${VLESS_LINK}
 ================== 2. Hysteria 2 (UDP 极速冲浪神器) ==================
 协议类型 (Protocol)   : Hysteria 2
 传输协议 (Network)    : UDP
-端口 (Port)           : ${HY2_PORT} (随机高位防探测)
+端口 (Port)           : ${HY2_PORT}
 密码 (Password)       : ${HY2_PASSWORD}
 SNI 伪装域名          : ${SELF_SNI}
 跳过证书校验          : 允许 (insecure: true / skip-cert-verify: true)
@@ -359,7 +359,7 @@ ${HY2_LINK}
 ================== 3. AnyTLS (TCP 防指纹轻量新秀) ====================
 协议类型 (Protocol)   : AnyTLS
 传输协议 (Network)    : TCP
-端口 (Port)           : ${ANYTLS_PORT} (随机高位防探测)
+端口 (Port)           : ${ANYTLS_PORT}
 密码 (Password)       : ${ANYTLS_PASSWORD}
 SNI 伪装域名          : ${SELF_SNI}
 跳过证书校验          : 允许 (insecure: true / skip-cert-verify: true)

@@ -9,7 +9,7 @@
 ## ✨ 核心特性
 
 - 🚀 **全自动极速安装**：自动适配系统架构（amd64 / arm64 等），实时获取 GitHub 官方最新稳定版二进制。
-- 🛡️ **高隐蔽防探测**：所有协议默认统一分配 **10000 - 60000 随机高位端口**，避开全网端口扫描与主动探测。
+- 🛡️ **多协议独立隔离**：三大协议端口自动分配互不干扰，支持环境变量自定义指定。
 - ⚡ **最强流控 XTLS-Vision**：VLESS + Reality 默认启用最新 `xtls-rprx-vision`，智能填充，消除 TLS-in-TLS 特征。
 - 🌐 **免域名免证书负担**：
   - Reality 借用大厂正规证书（默认 `addons.mozilla.org`），天然免证书。
@@ -22,11 +22,11 @@
 
 ## 📊 三大协议支持对比
 
-| 协议 | 传输层 | 默认端口策略 | 证书方案 | 核心优势与适用场景 |
-| :--- | :---: | :---: | :---: | :--- |
-| **VLESS + Reality** | TCP | 随机高位 (10000-60000) | 借用大厂真实证书 | **日常主力首选**：免域名证书，大厂真身挡枪，最稳抗封锁 |
-| **Hysteria 2** | UDP | 随机高位 (10000-60000) | 10年免维护自签证书 | **速度吞吐之王**：魔改 QUIC + Brutal，晚高峰与恶劣丢包网络神级加速 |
-| **AnyTLS** | TCP | 随机高位 (10000-60000) | 10年免维护自签证书 | **轻量防指纹新秀**：动态包长填充，连接多路复用，消除特征分析 |
+| 协议 | 传输层 | 证书方案 | 核心优势与适用场景 |
+| :--- | :---: | :---: | :--- |
+| **VLESS + Reality** | TCP | 借用大厂真实证书 | **日常主力首选**：免域名证书，大厂真身挡枪，最稳抗封锁 |
+| **Hysteria 2** | UDP | 10年免维护自签证书 | **速度吞吐之王**：魔改 QUIC + Brutal，晚高峰与恶劣丢包网络神级加速 |
+| **AnyTLS** | TCP | 10年免维护自签证书 | **轻量防指纹新秀**：动态包长填充，连接多路复用，消除特征分析 |
 
 ---
 
@@ -71,9 +71,9 @@ sudo ./install.sh
 
 | 环境变量 | 说明 | 默认值 | 示例 |
 | :--- | :--- | :--- | :--- |
-| `PORT` | VLESS + Reality 的 TCP 监听端口 | 随机高位端口 | `PORT=443` |
-| `HY2_PORT` | Hysteria 2 的 UDP 监听端口 | 随机高位端口 | `HY2_PORT=8443` |
-| `ANYTLS_PORT` | AnyTLS 的 TCP 监听端口 | 随机高位端口 | `ANYTLS_PORT=9443` |
+| `PORT` | VLESS + Reality 的 TCP 监听端口 | 随机分配 | `PORT=443` |
+| `HY2_PORT` | Hysteria 2 的 UDP 监听端口 | 随机分配 | `HY2_PORT=8443` |
+| `ANYTLS_PORT` | AnyTLS 的 TCP 监听端口 | 随机分配 | `ANYTLS_PORT=9443` |
 | `REALITY_SNI` | Reality 借用证书的伪装域名 | `addons.mozilla.org` | `REALITY_SNI=gateway.icloud.com` |
 | `CUSTOM_SNI` | 自签证书所使用的伪装域名 | `bing.com` | `CUSTOM_SNI=www.microsoft.com` |
 | `HY2_PASS` | Hysteria 2 认证密码 | 自动随机生成 | `HY2_PASS=MyStrongPass123` |
