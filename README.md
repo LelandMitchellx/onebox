@@ -32,34 +32,33 @@
 
 ## 🚀 快速开始
 
-### 方式一：直接在 Debian / Ubuntu 小鸡上运行（推荐）
+### 方式一：单行全自动安装（推荐）
 
-以 `root` 用户登录 VPS 后，执行以下单行命令：
+以 `root` 用户登录 VPS。针对极简纯净系统（自动安装 `curl` 依赖并执行）：
 
 ```bash
-# 极简纯净 Debian / Ubuntu 小鸡建议直接使用该全自动合体指令（自动预装 curl 并运行）：
 apt update -y && apt install -y curl && bash <(curl -fsSL https://raw.githubusercontent.com/LelandMitchellx/onebox/main/install.sh)
 ```
 
-> **备用指令说明**：
-> - 若系统已内置 `curl`：
->   ```bash
->   bash <(curl -fsSL https://raw.githubusercontent.com/LelandMitchellx/onebox/main/install.sh)
->   ```
-> - 国内小鸡 / 无法直连 GitHub 时：
->   ```bash
->   bash <(curl -fsSL https://ghproxy.net/https://raw.githubusercontent.com/LelandMitchellx/onebox/main/install.sh)
->   ```
+若系统中已确认安装了 `curl`，亦可直接执行：
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/LelandMitchellx/onebox/main/install.sh)
+```
 
 ---
 
-### 方式二：手动上传部署
+### 方式二：分步下载与部署
+
+下载脚本：
 
 ```bash
-# 1. 下载脚本
 curl -fsSL -O https://raw.githubusercontent.com/LelandMitchellx/onebox/main/install.sh
+```
 
-# 2. 赋予执行权限并运行
+赋予执行权限并运行：
+
+```bash
 chmod +x install.sh
 sudo ./install.sh
 ```
