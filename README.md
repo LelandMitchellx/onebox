@@ -37,13 +37,19 @@
 以 `root` 用户登录 VPS 后，执行以下单行命令：
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/LelandMitchellx/onebox/main/install.sh)
+# 极简纯净 Debian / Ubuntu 小鸡建议直接使用该全自动合体指令（自动预装 curl 并运行）：
+apt update -y && apt install -y curl && bash <(curl -fsSL https://raw.githubusercontent.com/LelandMitchellx/onebox/main/install.sh)
 ```
 
-> **国内机器 / 无法直连 GitHub 时**：
-> ```bash
-> bash <(curl -fsSL https://ghproxy.net/https://raw.githubusercontent.com/LelandMitchellx/onebox/main/install.sh)
-> ```
+> **备用指令说明**：
+> - 若系统已内置 `curl`：
+>   ```bash
+>   bash <(curl -fsSL https://raw.githubusercontent.com/LelandMitchellx/onebox/main/install.sh)
+>   ```
+> - 国内小鸡 / 无法直连 GitHub 时：
+>   ```bash
+>   bash <(curl -fsSL https://ghproxy.net/https://raw.githubusercontent.com/LelandMitchellx/onebox/main/install.sh)
+>   ```
 
 ---
 
